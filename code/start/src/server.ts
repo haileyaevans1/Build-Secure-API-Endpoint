@@ -11,6 +11,15 @@ import authRoutes from "./routes/auth";
 import secureRoutes from "./routes/secure";
 import errorHandler from "./middleware/errorHandler";
 
+import { addUser } from "./utils/users";
+
+(async () => {
+  // seed users - passwords: adminpass, userpass
+  await addUser("1", "admin", "adminpass", "ADMIN");
+  await addUser("2", "alice", "userpass", "USER");
+})();
+
+
 const app = express();
 
 app.use(helmet());
