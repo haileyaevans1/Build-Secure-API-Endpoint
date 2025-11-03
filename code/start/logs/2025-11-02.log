@@ -1,0 +1,10 @@
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-11-03T04:03:30.344Z"}
+{"level":"info","message":"::1 - - [03/Nov/2025:04:06:02 +0000] \"POST /auth/signup HTTP/1.1\" 400 256 \"-\" \"PostmanRuntime/7.44.1\"","timestamp":"2025-11-03T04:06:02.509Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-11-03T04:08:18.740Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-11-03T04:09:32.102Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-11-03T04:10:34.469Z"}
+{"level":"info","message":"::1 - - [03/Nov/2025:04:10:58 +0000] \"POST /secure/public HTTP/1.1\" 404 153 \"-\" \"PostmanRuntime/7.44.1\"","timestamp":"2025-11-03T04:10:58.582Z"}
+{"level":"info","message":"::1 - - [03/Nov/2025:04:11:54 +0000] \"POST /auth/signup HTTP/1.1\" 400 256 \"-\" \"PostmanRuntime/7.44.1\"","timestamp":"2025-11-03T04:11:54.571Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-11-03T04:13:29.079Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-11-03T04:14:05.843Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-11-03T04:14:31.014Z"}
