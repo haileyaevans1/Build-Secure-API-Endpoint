@@ -73,9 +73,9 @@ If successful, the server will be available at:
 
 ---
 
-### API Endpoints
+## API Endpoints
 ## 1. User Signup
-# POST /auth/signup
+### POST /auth/signup
 Example request body:
   {
     "username": "alice",
@@ -93,7 +93,7 @@ Example response:
 ---
 
 ## 2. User Login
-# POST /auth/login
+### POST /auth/login
 Example request body:
   {
     "username": "alice",
@@ -108,14 +108,14 @@ Example response:
 ---
 
 ## 3. Authenticated Route
-# GET /secure/me
+### GET /secure/me
 Requires:
   Authorization: Bearer <token>
 
 ---
 
 ## 4. Admin-Only Route
-# GET /secure/admin
+### GET /secure/admin
 Authorization required. Must be an ADMIN user.
 
 Possible outcomes:
@@ -127,7 +127,7 @@ Possible outcomes:
 ---
 
 ## 5. Public Route
-# GET /secure/public
+### GET /secure/public
 No authentication required
 
 ---
