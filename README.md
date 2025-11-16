@@ -1,102 +1,175 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/qtyiwJ5y)
-# Assignment: Build a Secure API Endpoint
+# Secure API Endpoint – Express.js, JWT Authentication, and Role-Based Access Control
 
-## Introduction
+This project demonstrates how to build a secure backend API using Express.js, JSON Web Tokens (JWT), password hashing with bcrypt, structured logging with Winston, and role-based access control (RBAC). It also includes input validation, centralized error handling, rate limiting, and additional security middleware to create a more production-ready environment.
 
-In this assignment, we will build a **secure API endpoint** using **Express.js**, **JWT-based authentication**, **role-based access control (RBAC)**, and **observability** features such as structured logging and centralized error handling. By the end, you’ll have a functional backend service that demonstrates secure authentication, role verification, request logging, and robust error management in a real-world scenario.
-
-----
-
-## **Working with Dev Container**
-
-To complete this assignment in a reliable and fully configured environment, please refer to the instructions in the file: **`README-devcontainer.md`**. This guide walks you through opening the assignment in **Visual Studio Code** using a **Dev Container**, which automatically installs all necessary Python libraries and tools. Following that setup ensures that the notebook runs smoothly without manual configuration or missing dependencies. Make sure to open the **main assignment folder** in VS Code and follow the steps outlined in the Dev Container guide before starting the notebook.
-
-----
-
-## Starter Files
-
-The initial code is available inside the `start` folder under the `code` folder associated with this activity.
+The purpose of this project is to show how a backend service can authenticate users, verify permissions, log requests, manage errors consistently, and restrict sensitive routes.
 
 ---
 
-## Requirements
+## Features
 
-We'll be working with Express.js, JWT, bcrypt, and Winston for logging to develop our secure API. Here's what we need to accomplish:
+### Authentication
+- User registration and login using JWT  
+- Password hashing using bcrypt  
+- JWT includes user ID, username, and role  
 
-### Set Up the Development Environment
+### Role-Based Access Control
+- Certain routes require specific user roles  
+- Middleware checks roles during request processing  
 
-We need to:  
+### Validation and Security
+- Input validation using express-validator  
+- Security headers using Helmet  
+- Rate limiting to control API abuse  
+- CORS enabled  
 
-- Initialize a Node.js project using `npm` with TypeScript support.
-- Install necessary dependencies, including Express.js for routing, jsonwebtoken for authentication, bcryptjs for password hashing, morgan and Winston for logging, and dotenv for environment variable management.
-- Configure scripts for development and production environments.
+### Logging and Error Handling
+- Structured logging with Winston and daily rotation  
+- Centralized error-handling middleware  
+- Logs written to console and rotating log files  
 
-### Build the Core Features
-
-We need to implement the following functionalities:  
-
-**Authentication:**  
-
-- Implement JWT-based authentication with role verification.
-- Use bcryptjs to hash passwords securely.
-- Store user credentials in an in-memory store (`Map`).
-
-**Role-Based Access Control (RBAC):**  
-
-- Enforce role-based access on API endpoints (e.g., restrict `/secure` to `ADMIN` users).
-- Use middleware to verify roles during request processing.
-
-**Structured Logging:**  
-
-- Log all incoming requests and errors using Winston.
-- Ensure logs are stored both in the console and in files for traceability.
-
-**Centralized Error Handling:**  
-
-- Handle errors gracefully with centralized error-handling middleware.
-- Return consistent, structured error responses.
-
-**Observability Enhancements:**  
-
-- Add rate-limiting using `express-rate-limit` to prevent abuse.
-- Secure headers using `helmet`.
-
-**Validation:**  
-
-- Validate incoming requests using `express-validator`.
-- Ensure only valid data is processed.
-
-**Middleware and Security:**  
-
-- Use `cors` for cross-origin resource sharing.
-- Use `morgan` for logging HTTP requests.
-
-### Test the Application
-
-We need to verify:  
-
-- The API correctly authenticates users and enforces RBAC.
-- Structured logging captures all relevant request and error details.
-- Errors are handled gracefully with meaningful responses.
-- All tests pass successfully using tools like Postman or cURL.
+### Development Structure
+- Built in TypeScript  
+- Organized folder layout  
+- In-memory user store for demonstration  
 
 ---
 
-## Deliverables
+## Installation
 
-The deliverable of this assignment is a working backend service that meets all the requirements above. We need to submit:  
+Clone the repository:
 
-- The public GitHub repository containing the source code.
-- Screenshots showing:
-  - The API running locally.
-  - Responses from API endpoints.
-  - Role-based access control in action.
-  - Logs captured during testing.
-- A brief README file explaining how to set up and run the app locally.
-- Simple documentation for the app's functionality and testing process.
+```bash
+git clone <your-repository-url>
+cd <project-folder>
+```
+
+Install dependencies: 
+  npm install
 
 ---
 
-## Conclusion
+## Environment Variables
+Create a .env file in the project root:
+  PORT=3000
+  JWT_SECRET=your_secret_key_here
+  JWT_EXPIRY=1h
+  LOG_DIR=logs
+  RATE_LIMIT_WINDOW_MS=60000
+  RATE_LIMIT_MAX=100
 
-Building a Build a Secure API Endpoint using Express.js, JWT, and structured logging is an excellent way to practice creating secure and observable backend services. By completing this assignment, you've learned how to implement authentication, enforce role-based access control, optimize observability with logging, and structure a modular backend project. These skills form the foundation for developing more complex and efficient APIs in the future.
+---
+
+## Running the Application
+Development:
+  npm run dev
+
+Production: 
+  npm run build
+  npm start
+
+If successful, the server will be available at:
+  http://localhost:3000
+
+---
+
+### API Endpoints
+## 1. User Signup
+# POST /auth/signup
+Example request body:
+  {
+    "username": "alice",
+    "password": "alicepass",
+    "role": "USER"
+  }
+
+Example response:
+  {
+    "id": "generated-uuid",
+    "username": "alice",
+    "role": "USER"
+  }
+
+---
+
+## 2. User Login
+# POST /auth/login
+Example request body:
+  {
+    "username": "alice",
+    "password": "alicepass"
+  }
+
+Example response:
+  {
+    "token": "jwt_token_here"
+  }
+
+---
+
+## 3. Authenticated Route
+# GET /secure/me
+Requires:
+  Authorization: Bearer <token>
+
+---
+
+## 4. Admin-Only Route
+# GET /secure/admin
+Authorization required. Must be an ADMIN user.
+
+Possible outcomes:
+
+-200 OK
+-403 Forbidden
+-401 Unauthorized
+
+---
+
+## 5. Public Route
+# GET /secure/public
+No authentication required
+
+---
+
+## Testing with cURL
+Signup:
+  curl -X POST http://localhost:3000/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{"username":"testuser","password":"testpass","role":"USER"}'
+
+Login:
+  curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"testuser","password":"testpass"}'
+
+Access protected route:
+  curl -X GET http://localhost:3000/secure/me \
+  -H "Authorization: Bearer <token_here>"
+
+---
+
+## Logging
+
+Logs are stored in the logs directory.
+Daily rotation is handled with Winston's rotation transport.
+Log entries are structured and formatted as JSON.
+
+---
+
+## Project Folder Structure
+
+  src/
+    config/
+      logger.ts
+    middleware/
+      auth.ts
+      errorHandler.ts
+      requestLogger.ts
+      rbac.ts
+    routes/
+      auth.ts
+      secure.ts
+    utils/
+      users.ts
+    server.ts
